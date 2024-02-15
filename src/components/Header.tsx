@@ -7,8 +7,8 @@ import {
   Percent,
   ShoppingCartIcon,
 } from "lucide-react";
-import { Button } from "./button";
-import { Card } from "./card";
+import { Button } from "./ui/button";
+import { Card } from "./ui/card";
 import Link from "next/link";
 import {
   Sheet,
@@ -17,7 +17,7 @@ import {
   SheetHeader,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Separator } from "./separator";
+import { Separator } from "./ui/separator";
 
 const Header = () => {
   return (
