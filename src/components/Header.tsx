@@ -1,3 +1,5 @@
+"use client";
+
 import {
   HomeIcon,
   ListOrderedIcon,
@@ -18,8 +20,21 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Separator } from "./ui/separator";
+import { signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const Header = () => {
+  const { status, data } = useSession();
+  const router = useRouter();
+
+  const handleLoginClick = () => {
+    router.push("/sign-in2");
+  };
+
+  const handleLogoutClick = async () => {
+    await signOut();
+  };
+
   return (
     <Card className="flex justify-between p-[1.875rem] items-center">
       <Sheet>
@@ -34,23 +49,10 @@ const Header = () => {
             Menu
           </SheetHeader>
 
-          {/* TODO logica de login */}
-
-          {/* {status === "authenticated" && data?.user && (
+          {status === "authenticated" && data?.user && (
             <div className="flex flex-col">
               <div className="flex items-center gap-8 py-4 ">
-                <Avatar>
-                  <AvatarFallback>
-                    {data.user.name?.[0].toUpperCase()}
-                  </AvatarFallback>
-
-                  {data.user.image && (
-                    <AvatarImage
-                      src={data.user.image}
-                      className="w-10 rounded-full"
-                    />
-                  )}
-                </Avatar>
+                {data.user.name?.[0].toUpperCase()}
 
                 <div className="flex flex-col">
                   <p className="font-medium">{data.user.name}</p>
@@ -59,18 +61,20 @@ const Header = () => {
               </div>
               <Separator />
             </div>
-          )} */}
+          )}
 
           <div className="mt-2 flex flex-col gap-4">
-            {/* {status === "unauthenticated" ? (
-              <Button
-                onClick={handleLoginClick}
-                variant="outline"
-                className="w-full justify-start gap-2"
-              >
-                <LogInIcon size={16} />
-                Fazer Login
-              </Button>
+            {status === "unauthenticated" ? (
+              <SheetClose asChild>
+                <Button
+                  onClick={handleLoginClick}
+                  variant="outline"
+                  className="w-full justify-start gap-2"
+                >
+                  <LogInIcon size={16} />
+                  Fazer Login
+                </Button>
+              </SheetClose>
             ) : (
               <Button
                 onClick={handleLogoutClick}
@@ -80,7 +84,7 @@ const Header = () => {
                 <LogOutIcon size={16} />
                 Logout
               </Button>
-            )} */}
+            )}
             <SheetClose asChild>
               <Link href="/">
                 <Button

@@ -15,9 +15,10 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import GoogleSignInButton from "../GoogleSignInButton";
-import { AuthService } from "../../api/auth";
+import { AuthService } from "../../app/api/auth";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 const FormSchema = z.object({
   email: z.string().min(1, "Email is required").email("Invalid email"),
@@ -40,22 +41,34 @@ const SignInForm = () => {
   const router = useRouter();
 
   const onSubmit = async (values: z.infer<typeof FormSchema>) => {
-    try {
-      const { data } = await AuthService.login({
-        email: values.email,
-        password: values.password,
-      });
-      if (data.data.token) {
-        setErrorLogin("");
-        localStorage.setItem("token", data.data.token);
-        router.push("/");
-      }
-      if (data.data.error) {
-        setErrorLogin(data.data.error);
-      }
-    } catch (error) {
-      alert(error);
+    const result = await signIn("credentials", {
+      email: values.email,
+      password: values.password,
+    });
+    console.log(result);
+
+    if (result?.error) {
+      console.log(result);
     }
+
+    router.replace("/");
+
+    // try {
+    //   const { data } = await AuthService.login({
+    //     email: values.email,
+    //     password: values.password,
+    //   });
+    //   if (data.data.token) {
+    //     setErrorLogin("");
+    //     localStorage.setItem("token", data.data.token);
+    //     router.push("/");
+    //   }
+    //   if (data.data.error) {
+    //     setErrorLogin(data.data.error);
+    //   }
+    // } catch (error) {
+    //   alert(error);
+    // }
   };
 
   return (
