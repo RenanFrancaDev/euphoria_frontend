@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Banner from "../../../public/fotos/banner_promo.png";
+import Categories from "./components/Categories";
 
 const Home = () => {
   return (
@@ -12,6 +13,8 @@ const Home = () => {
         src={Banner}
         alt="promo banner"
       />
+
+      <Categories />
     </div>
   );
 };
