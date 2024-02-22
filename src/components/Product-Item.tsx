@@ -15,7 +15,7 @@ export interface ProductItemProp {
     discount: number;
     newPrice: number;
     quantity_stock: number;
-    imageUrls: [{ image: string }];
+    imageUrls: [string];
     created_at: Date;
     updated_at: Date;
   };
@@ -24,14 +24,14 @@ export interface ProductItemProp {
 const ProductItem = ({ product }: ProductItemProp) => {
   return (
     // <Link href={`/product/${product.slug}`}>
-    <div className="flex flex-col gap-4 max-w-[170px]">
-      <div className="relative flex h-[170px]  items-center justify-center rounded-lg bg-accent">
+    <div className="flex flex-col gap-4 w-[180px] h-full border rounded-md  hover:cursor-pointer">
+      <div className="relative flex w-full items-center justify-center rounded-lg  bg-emerald-100 ">
         <Image
-          src={`/fotos/products/${product.id}/${product.imageUrls[0].image}`}
+          src={`/fotos/products/${product.id}/${product.imageUrls[0]}`}
           height={0}
           width={0}
           sizes="100vw"
-          className="h-[90px] max-h-[70%] w-auto max-w[80%]"
+          className="h-full w-full "
           style={{
             objectFit: "contain",
           }}

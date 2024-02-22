@@ -13,10 +13,9 @@ export interface ProductListProps {
     newPrice: number;
     quantity_stock: number;
     imageUrls: [];
-    image: string;
     created_at: Date;
     updated_at: Date;
-  }[];
+  };
 }
 
 const ProductList = ({ products }: ProductListProps) => {
