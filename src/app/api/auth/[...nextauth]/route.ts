@@ -1,5 +1,6 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import axios from "axios";
 
 const nextAuthOptions: NextAuthOptions = {
   providers: [
@@ -10,23 +11,22 @@ const nextAuthOptions: NextAuthOptions = {
         password: { label: "password", type: "password" },
       },
 
-      async authorize(credentials, req) {
-        const response = await fetch("http://localhost:4000/auth/login", {
-          method: "POST",
-          headers: {
-            "Content-type": "application/json",
-          },
-          body: JSON.stringify({
+      async authorize(credentials, _) {
+        const response: any = await axios.post(
+          "http://localhost:4000/auth/login",
+          {
+            headers: {
+              "Content-type": "application/json",
+            },
             email: credentials?.email,
             password: credentials?.password,
-          }),
-        });
+          }
+        );
 
-        console.log("response");
-        debugger;
-        const user = await response.json();
+        const user = response.data.data;
+        console.log("user", user);
 
-        if (user && response.ok) {
+        if (user.id && user.token) {
           return user;
         }
 
@@ -35,15 +35,30 @@ const nextAuthOptions: NextAuthOptions = {
     }),
   ],
   pages: {
-    signIn: "/sign-in",
+    signIn: "/sign-in2",
   },
   callbacks: {
     async jwt({ token, user }) {
-      user && (token.user = user);
+      token.user = user;
       return token;
     },
-    async session({ session, token }) {
-      session = token.user as any;
+    async session({ session, user, token }) {
+      session.user = {
+        ...session.user,
+        id: token.sub,
+        iat: token.iat,
+        exp: token.exp,
+        jti: token.jti,
+      } as {
+        name: string;
+        email: string;
+        id: string;
+        iat: number;
+        exp: number;
+        jti: string;
+        type: string;
+      };
+      // console.log(session);
       return session;
     },
   },
