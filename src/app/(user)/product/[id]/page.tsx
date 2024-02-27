@@ -21,7 +21,7 @@ const ProductDetailPage = async ({
     <div>
       <ProductImages product={product} />
       <ProductInfo product={product} />
-      <SectionTitle>Outras opções de {product.category} : </SectionTitle>
+      <SectionTitle>Outras opções de {product.category}: </SectionTitle>
       {/* <ProductList products={product.category.products} /> */}
     </div>
   );
