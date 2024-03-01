@@ -8,6 +8,7 @@ export interface ProductListProps {
     newPrice: number;
     discount: number;
     quantity_stock: number;
+    category: string;
     created_at: Date;
     updated_at: Date;
   };

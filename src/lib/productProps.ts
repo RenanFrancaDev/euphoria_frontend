@@ -9,6 +9,7 @@ export interface ProductListProps {
     discount: number;
     imageUrls: [string];
     quantity_stock: number;
+    category: string;
     created_at: Date;
     updated_at: Date;
   };
