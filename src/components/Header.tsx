@@ -22,9 +22,12 @@ import {
 import { Separator } from "./ui/separator";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { Session } from "inspector";
+import Cart from "./Cart";
 
 const Header = () => {
   const { status, data } = useSession();
+
   const router = useRouter();
 
   const handleLoginClick = () => {
@@ -51,19 +54,14 @@ const Header = () => {
 
           {status === "authenticated" && data?.user && (
             <div className="flex flex-col">
-              <div className="flex items-center gap-8 py-4 ">
-                {data.user.name?.[0].toUpperCase()}
-
-                <div className="flex flex-col">
-                  <p className="font-medium">{data.user.name}</p>
-                  <p className="text-sm opacity-75">Boas compras!</p>
-                </div>
+              <div className="flex flex-col">
+                <p className="font-medium pt-6">{data.user.name}</p>
+                <p className="text-sm opacity-75">Boas compras!</p>
               </div>
-              <Separator />
             </div>
           )}
 
-          <div className="mt-2 flex flex-col gap-4">
+          <div className="mt-2 flex flex-col gap-4 pt-6">
             {status === "unauthenticated" ? (
               <SheetClose asChild>
                 <Button
@@ -138,9 +136,17 @@ const Header = () => {
           <span className="text-primary">EUPHORIA</span> Store
         </h1>
       </Link>
-      <Button size="icon" variant="outline">
-        <ShoppingCartIcon />
-      </Button>
+
+      <Sheet>
+        <SheetTrigger asChild>
+          <Button size="icon" variant="outline">
+            <ShoppingCartIcon />
+          </Button>
+        </SheetTrigger>
+        <SheetContent>
+          <Cart />
+        </SheetContent>
+      </Sheet>
     </Card>
   );
 };

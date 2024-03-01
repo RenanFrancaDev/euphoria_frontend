@@ -1,22 +1,6 @@
 import ProductItem from "./Product-Item";
-// import { ProductListProps } from "@/lib/productsProps";
+import { ProductListProps } from "@/lib/productsProps";
 // import { computeProductTotalPrice } from "@/helpers/products";
-
-export interface ProductListProps {
-  products: {
-    id: string;
-    category_id: string;
-    name: string;
-    description: string;
-    price: number;
-    discount: number;
-    newPrice: number;
-    quantity_stock: number;
-    imageUrls: [];
-    created_at: Date;
-    updated_at: Date;
-  };
-}
 
 const ProductList = ({ products }: ProductListProps) => {
   return (
