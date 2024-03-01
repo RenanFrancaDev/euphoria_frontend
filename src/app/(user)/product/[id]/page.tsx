@@ -4,7 +4,7 @@ import ProductInfo from "./components/product-info";
 import ProductList from "@/components/Product-List";
 import SectionTitle from "@/components/Section-Title";
 
-interface ProducDetailsPageProps {
+interface ProductDetailsPageProps {
   params: {
     id: number;
   };
@@ -12,8 +12,11 @@ interface ProducDetailsPageProps {
 
 const ProductDetailPage = async ({
   params: { id },
-}: ProducDetailsPageProps) => {
+}: ProductDetailsPageProps) => {
   const product = (await ProductService.getProduct(id)).data.data;
+  const productByCategory = (
+    await ProductService.getProductsByCategory(product.category)
+  ).data.data;
 
   if (!product) return null;
 
@@ -22,7 +25,7 @@ const ProductDetailPage = async ({
       <ProductImages product={product} />
       <ProductInfo product={product} />
       <SectionTitle>Outras opções de {product.category}: </SectionTitle>
-      {/* <ProductList products={product.category.products} /> */}
+      <ProductList products={productByCategory} />
     </div>
   );
 };
