@@ -24,13 +24,14 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
     const item = JSON.parse(
       localStorage.getItem("@euphoria-store/cart-products") || "[]"
     );
-    // console.log(item)
+
     setProducts(item);
   }, []);
 
+  console.log("products", products);
+
   useEffect(() => {
     if (products.length > 0) {
-      // console.log("debug"+products)
       localStorage.setItem(
         "@euphoria-store/cart-products",
         JSON.stringify(products)
@@ -55,7 +56,7 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
   const totalDiscount = subtotal - total;
 
   const addProductToCart = (product: ICartProduct) => {
-    // if product already contains in the cart
+    console.log(product);
     const productIsAlreadyOnCart = products.some(
       (cartProduct) => cartProduct.id === product.id
     );
@@ -70,9 +71,13 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
             };
           }
 
+          console.log(cartProduct);
+
           return cartProduct;
         })
       );
+
+      console.log(productIsAlreadyOnCart);
 
       return;
     }

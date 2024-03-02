@@ -6,7 +6,6 @@ import { useState } from "react";
 
 const ProductImages = ({ product }: ProductListProps) => {
   const [currentImage, setCurrentImage] = useState(product.imageUrls[0]);
-  // console.log(imageUrls);
 
   const handleImageClick = (imageUrl: string) => {
     setCurrentImage(imageUrl);
