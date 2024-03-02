@@ -3,10 +3,11 @@ import { Badge } from "./ui/badge";
 import { ShoppingCartIcon } from "lucide-react";
 import { useContext } from "react";
 import { CartContext } from "@/app/providers/cartProvider";
+import CartItem from "./Cart-item";
 
 const Cart = () => {
   const { products } = useContext(CartContext);
-  console.log("123", products);
+
   return (
     <div className="flex h-full flex-col gap-4">
       <Badge
@@ -17,12 +18,13 @@ const Cart = () => {
         Carrinho
       </Badge>
 
-      {products.map((product) => (
-        <div key={product.id}>
-          <h3>{product.name}</h3>
-          <p>{product.description}</p>
-        </div>
-      ))}
+      {products.length > 0 ? (
+        products.map((product) => (
+          <CartItem key={product.id} product={product} />
+        ))
+      ) : (
+        <p>Você ainda não adicionou nenhum produto ao carrinho</p>
+      )}
     </div>
   );
 };
