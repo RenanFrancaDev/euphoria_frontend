@@ -4,9 +4,18 @@ import { ShoppingCartIcon } from "lucide-react";
 import { useContext } from "react";
 import { CartContext } from "@/app/providers/cartProvider";
 import CartItem from "./Cart-item";
+import { Separator } from "@radix-ui/react-separator";
+import { Button } from "./ui/button";
 
 const Cart = () => {
-  const { products } = useContext(CartContext);
+  const { data } = useSession();
+  const { products, subtotal, total, totalDiscount } = useContext(CartContext);
+
+  const handleFinishPurchaseClick = async () => {
+    if (!data?.user) {
+      return;
+    }
+  };
 
   return (
     <div className="flex h-full flex-col gap-4">
@@ -24,6 +33,45 @@ const Cart = () => {
         ))
       ) : (
         <p>Você ainda não adicionou nenhum produto ao carrinho</p>
+      )}
+
+      {products.length > 0 && (
+        <div className="flex flex-col gap-3">
+          <Separator />
+
+          <div className="flex items-center justify-between text-xs">
+            <p>Subtotal</p>
+            <p>R$ {subtotal.toFixed(2)}</p>
+          </div>
+
+          <Separator />
+
+          <div className="flex items-center justify-between text-xs">
+            <p>Entrega</p>
+            <p>GRÁTIS</p>
+          </div>
+
+          <Separator />
+
+          <div className="flex items-center justify-between text-xs">
+            <p>Descontos</p>
+            <p>- R$ {totalDiscount.toFixed(2)}</p>
+          </div>
+
+          <Separator />
+
+          <div className="flex items-center justify-between text-sm font-bold">
+            <p>Total</p>
+            <p>R$ {total.toFixed(2)}</p>
+          </div>
+
+          <Button
+            className="mt-7 font-bold uppercase"
+            onClick={handleFinishPurchaseClick}
+          >
+            Finalizar compra
+          </Button>
+        </div>
       )}
     </div>
   );
