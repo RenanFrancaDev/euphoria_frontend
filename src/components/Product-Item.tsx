@@ -9,7 +9,7 @@ import { ProductListProps } from "@/lib/productProps";
 const ProductItem = ({ product }: ProductListProps) => {
   return (
     <Link href={`/product/${product.id}`}>
-      <div className="flex flex-col gap-4 w-[180px] h-full border rounded-md  hover:cursor-pointer">
+      <div className="flex flex-col gap-4 w-[170px] h-full border rounded-md  hover:cursor-pointer">
         <div className="relative flex w-full items-center justify-center rounded-lg  bg-emerald-100 ">
           <Image
             src={`/fotos/products/${product.id}/${product.imageUrls[0]}`}
