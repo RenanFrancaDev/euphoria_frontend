@@ -4,9 +4,9 @@ import Image from "next/image";
 import { Badge } from "./ui/badge";
 import Link from "next/link";
 import DiscountBadge from "./Discount-Badge";
-import { ProductListProps } from "@/lib/productProps";
+import { IProduct, ProductListProps } from "@/lib/productProps";
 
-const ProductItem = ({ product }: ProductListProps) => {
+const ProductItem = ({ product }: { product: IProduct }) => {
   return (
     <Link href={`/product/${product.id}`}>
       <div className="flex flex-col gap-4 w-[170px] h-full border rounded-md  hover:cursor-pointer">

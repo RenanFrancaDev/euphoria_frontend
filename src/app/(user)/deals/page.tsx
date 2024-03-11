@@ -1,6 +1,7 @@
 import { ProductService } from "@/app/api/product";
 import ProductItem from "@/components/Product-Item";
 import { Badge } from "@/components/ui/badge";
+import { IProduct, ProductListProps } from "@/lib/productProps";
 import { PercentIcon } from "lucide-react";
 
 const DealsPage = async () => {
@@ -17,7 +18,7 @@ const DealsPage = async () => {
       </Badge>
 
       <div className="flex flex-row flex-wrap items-center justify-between w-full gap-2">
-        {deals.map((product) => (
+        {deals.map((product: IProduct) => (
           <ProductItem key={product.id} product={product} />
         ))}
       </div>
