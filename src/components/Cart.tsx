@@ -6,15 +6,30 @@ import { CartContext } from "@/app/providers/cartProvider";
 import CartItem from "./Cart-item";
 import { Separator } from "@radix-ui/react-separator";
 import { Button } from "./ui/button";
+import axios from "axios";
 
 const Cart = () => {
   const { data } = useSession();
+
   const { products, subtotal, total, totalDiscount } = useContext(CartContext);
 
   const handleFinishPurchaseClick = async () => {
     if (!data?.user) {
-      return;
+      return alert("Fazer o Login");
     }
+
+    const order = await axios.post("http://localhost:4000/orders", {
+      headers: {
+        "Content-type": "application/json",
+      },
+      total_price: subtotal,
+      total_discount: totalDiscount,
+      total_price_current: total,
+      status: "pending",
+      products: products,
+      user_id: data.user.id,
+    });
+    console.log(order);
   };
 
   return (
